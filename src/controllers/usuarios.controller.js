@@ -1,18 +1,7 @@
 import { Usuarios } from "../models/usuarios.model.js";
 
 export const createUsuario = {
-    getAll: (req, res) => {
-        Usuarios.getAll().then((rows, err) => {
-            try {
-
-                res.render(('usuarios'),{
-                    usuarios: rows
-                });//nota: modificar para renderizar
-            } catch (err) {
-                res.json(err);
-            }
-        })
-    },
+    
     create: (req, res) => {
         const nuevo = {
             rut: req.body.rut,
