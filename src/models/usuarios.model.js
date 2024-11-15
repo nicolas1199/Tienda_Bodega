@@ -2,7 +2,11 @@ import db from '../config/configDb.js';
 
 export const Usuarios = {
   getAll: async () => {
-    const [rows] = await db.query('SELECT * FROM Usuarios');
+    const [rows] = await db.query(`SELECT * 
+                                  FROM Usuarios us, region_cl reg,provincia_cl pr,comuna_cl co 
+                                  WHERE us.id_co=co.id_co
+                                  AND co.id_pr = pr.id_pr
+                                  AND pr.id_re = reg.id_re`);
     return rows;
   },
 

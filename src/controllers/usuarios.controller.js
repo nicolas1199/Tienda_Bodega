@@ -5,9 +5,11 @@ export const createUsuario = {
         Usuarios.getAll().then((rows, err) => {
             try {
 
-                res.json(rows);
+                res.render(('usuarios'),{
+                    usuarios: rows
+                });//nota: modificar para renderizar
             } catch (err) {
-                res.json('error');
+                res.json(err);
             }
         })
     },

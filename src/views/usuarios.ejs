@@ -1,0 +1,31 @@
+<%- include('./partials/_header') %>
+
+<div>
+    
+    
+
+
+
+    <table id="tabla">
+        <thead>
+            <tr>
+                <th>Rut</th>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Cargo</th>
+                <th>Direccion</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% usuarios.forEach(persona => { %>
+             <tr>
+                <td><%= persona.rut %></td>
+                <td><%= persona.str_nombre %></td>
+                <td><%= persona.mail %></td>
+                <td><%= persona.rol %></td>
+                <td><%= persona.str_dir %>, <%= persona.str_co %></td>
+             </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
