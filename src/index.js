@@ -2,7 +2,7 @@
 import cors from 'cors';
 import morgan from 'morgan';
 import express, { json, urlencoded } from 'express';
-import path,{ dirname } from "path";
+import path, { dirname } from 'path';
 import indexRoutes from './routes/index.routes.js';
 import { HOST, PORT } from './config/configEnv.js';
 import { fileURLToPath } from 'url';
@@ -36,8 +36,10 @@ async function setupServer() {
     );
 
     app.set('view engine', 'ejs');
-    app.set('views', path.join(dirname(fileURLToPath(import.meta.url)), 'views'));
-    
+    app.set(
+      'views',
+      path.join(dirname(fileURLToPath(import.meta.url)), 'views'),
+    );
 
     //routes
     app.use('/api', indexRoutes);
