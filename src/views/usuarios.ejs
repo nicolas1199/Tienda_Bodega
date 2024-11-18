@@ -1,12 +1,72 @@
-<%- include('./partials/_header') %>
+<%- include('./partials/_navbar') %>
 
-<div>
+<div style="padding-left: 5%;padding-right: 5%;">
     
-    
+    <div class="d-flex">
+        <div class="add_r"style="margin-left: 94%;">
+            <button  class="btn btn-success" id="boton_agregar" popovertarget="agregar" popovertargetaction="toggle">Agregar Trabajador</button>
+        </div>
+    </div><br>
+    <div id="agregar" popover style="padding: 10px;">
+        <form action="usuarios/create" method="post">
+
+            <div class="form-group">
+                Rut:*<br>
+                <input type="text" name='rut' id="rut" placeholder="xxxxxxxx-x">
+            </div>
+
+            <div class="form-group">
+                Nombre y Apellido:*<br>
+                <input type="text" name="str_nombre" id="str_nombre" placeholder=""><br>
+            </div>
+            <div class="form-group">
+                Correo:*<br>
+                <input type="email" name="mail" id='mail' placeholder="@mail"><br>
+            </div>
+
+            <div class="form-group">
+                Rol empresarial:*<br>
+                <select name="rol" id="rol" class="form-select">
+                    <option value="trabajador">
+                        Trabajador
+                    </option>
+                    <option value="gerente">
+                        Gerente
+                    </option>
+                    
+                </select>
+            </div>
+
+            <div class="form-group">
+                Dirección:*<br>
+                <input type='text' name="str_dir" id='str_dir'><br>
+            </div>
+            <div class="form-group">
+                Comuna de Residencia:* <br>
+                <select name="id_co" id="id_co" class="form-select">
+                <% if (comunas) { %>
+        
+                    <option value=<%=comunas[0].id_co %>>
+                        Seleccione
+                    </option>
+                    <% for( let i=0; i < comunas.length; i++ ) { %>
+                        <option value=<%=comunas[i].id_co %>>
+                            <%= comunas[i].str_co %>
+                        </option>
+                    <% } %>
+
+                <% } %>
+                </select>
+            </div><br>
+        <button type="submit" class="btn btn-primary form-control">
+            Agregar</button> 
+        
+        </form>
+    </div>
 
 
 
-    <table id="tabla">
+    <table id="tabla" class="table table-bordered table-hover">
         <thead>
             <tr>
                 <th>Rut</th>
@@ -14,18 +74,109 @@
                 <th>Correo</th>
                 <th>Cargo</th>
                 <th>Direccion</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
             <% usuarios.forEach(persona => { %>
-             <tr>
-                <td><%= persona.rut %></td>
-                <td><%= persona.str_nombre %></td>
-                <td><%= persona.mail %></td>
-                <td><%= persona.rol %></td>
-                <td><%= persona.str_dir %>, <%= persona.str_co %></td>
-             </tr>
+                <% if (persona.rut!='null' || persona.rol!='visita') { %>
+                 
+                    <tr>
+                        <td><%= persona.rut %></td>
+                        <td><%= persona.str_nombre %></td>
+                        <td><%= persona.mail %></td>
+                        <td style="text-transform: uppercase;"><%= persona.rol %></td>
+                        <td><%= persona.str_dir %>, <%= persona.str_co %></td>
+                        <td>
+                            <div class="accordion" id="accordion-<%= persona.rut %>">
+                                <div class="accordion-item">
+                                  <h2 class="accordion-header" id="headingOne-<%= persona.rut %>">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-<%= persona.rut %>" aria-expanded="false" aria-controls="collapse-<%= persona.rut %>">
+                                      Acciones
+                                    </button>
+                                  </h2>
+                                  <div id="collapse-<%= persona.rut %>" class="accordion-collapse collapse" aria-labelledby="headingOne-<%= persona.rut %>" data-bs-parent="#accordionExample" >
+                                    <div class="accordion-body">
+                                        <button class="btn btn-primary form-control" popovertarget="edit-<%= persona.rut %>" popovertargetaction="toggle">Editar</button>
+                                        
+                                        <a href="./delete/<%= persona.rut %>" class="btn form-control btn-danger">Eliminar</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              <div id="edit-<%= persona.rut %>" popover>
+                                  <form action="update/<%= persona.rut %>" method="post">
+                                      
+                                  <div class="form-group">
+                                      Rut:*<br>
+                                      <input type="text" name='rut' id="rut" value="<%= persona.rut %>" disabled>
+                                  </div>
+      
+                                  <div class="form-group">
+                                      Nombre y Apellido:*<br>
+                                      <input type="text" name="str_nombre" id="str_nombre" value="<%= persona.str_nombre %>"><br>
+                                  </div>
+                                  <div class="form-group">
+                                      Correo:*<br>
+                                      <input type="email" name="mail" id='mail' value="<%= persona.mail %>"><br>
+                                  </div>
+      
+                                  <div class="form-group">
+                                      Rol empresarial:*<br>
+                                      <select name="rol" id="rol" class="form-select">
+                                          <option value="<%= persona.rol %>" style="text-transform: initial;">Act. <%= persona.rol %></option>
+                                          <option value="trabajador">
+                                              Trabajador
+                                          </option>
+                                          <option value="gerente">
+                                              Gerente
+                                          </option>
+                                          
+                                      </select>
+                                  </div>
+      
+                                  <div class="form-group">
+                                      Dirección:*<br>
+                                      <input type='text' name="str_dir" id='str_dir' value="<%= persona.str_dir %>"><br>
+                                  </div>
+                                  <div class="form-group">
+                                      Comuna de Residencia:* <br>
+                                      <select name="id_co" id="id_co" class="form-select">
+                                      <% if (comunas) { %>
+                                          
+                                          <option value=<%=persona.id_co %>>
+                                              Act. <%= persona.str_co %>
+                                          </option>
+                                          <% for( let i=0; i < comunas.length; i++ ) { %>
+                                              <option value=<%=comunas[i].id_co %>>
+                                                  <%= comunas[i].str_co %>
+                                              </option>
+                                          <% } %>
+      
+                                      <% } %>
+                                      </select>
+                                  </div><br>
+                                  <button type="submit" class="btn btn-primary form-control">
+                                  Confirmar</button> 
+              
+                                  </form>
+                                </div>
+                        </td>
+                        
+                    </tr>
+                <% } %>
             <% }) %>
         </tbody>
+        <tfoot>
+            <tr>
+                <th>Rut</th>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Cargo</th>
+                <th>Direccion</th>
+                <th>Acciones</th>
+            </tr>
+        </tfoot>
     </table>
 </div>

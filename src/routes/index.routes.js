@@ -1,7 +1,6 @@
 import { Router } from 'express';
 
-import categoriaRouter from './categorias.routes.js';
-import usuarioRouter from './usuarios.routes.js';
+
 import generalRouter from './general.routes.js';
 
 const router = Router();

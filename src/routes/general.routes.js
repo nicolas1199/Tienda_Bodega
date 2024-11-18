@@ -1,13 +1,18 @@
 import { Router } from "express";
-import { general } from "../controllers/general.controller.js";
-import categoriaRouter from "./categorias.routes.js";
-import usuarioRouter from "./usuarios.routes.js";
+
+import { login } from "../controllers/login.controller.js";
+import logedRouter from "./loged.routes.js";
 
 const generalRouter = Router();
 
-generalRouter.get('/:tabla', general.getAll);
 
-generalRouter.use('/categorias', categoriaRouter);
-generalRouter.use('/usuarios',usuarioRouter);
+//Rutas despues de ingresar
+generalRouter.use('/loged', logedRouter)
+
+//Rutas de verificacion y renderizado
+generalRouter.get('/login',login.get)
+generalRouter.post('/login/verif',login.verif)
+
+
 
 export default generalRouter;
