@@ -2,17 +2,28 @@ import db from '../config/configDb.js';
 
 export const Boletas = {
   getAll: async () => {
-    const [rows] = await db.query('SELECT * FROM Boletas');
+    const [rows] = await db.query(`SELECT * FROM Boletas, Usuarios, Materiales
+                                  WHERE Boletas.id_material=Materiales.id_material
+                                  && Boletas.rut = Usuarios.rut`);
     return rows;
   },
 
-  getById: async (id) => {
-    const [rows] = await db.query('SELECT * FROM Boletas WHERE id = ?', [id]);
-    return rows[0];
+  getByRut: async (rut) => {
+    const [rows] = await db.query(`SELECT * FROM Boletas, Usuarios, Materiales
+                                  WHERE Boletas.id_material=Materiales.id_material
+                                  && Boletas.rut = Usuarios.rut
+                                  && rut = '${rut}'`);
+    return rows;
   },
 
   create: async (boleta) => {
-    const { id_material, rut, cantidad, precio, fecha, hora } = boleta;
+    const { id_material,
+      rut,
+      cantidad,
+      precio,
+      fecha,
+      hora
+    } = boleta;
     const [result] = await db.query(
       'INSERT INTO Boletas (id_material, rut, cantidad, precio, fecha, hora) VALUES (?, ?, ?, ?, ?, ?)',
       [id_material, rut, cantidad, precio, fecha, hora],

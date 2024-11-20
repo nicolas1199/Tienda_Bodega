@@ -13,9 +13,9 @@ export const createUsuario = {
             str_dir: req.body.str_dir,
             id_co: req.body.id_co,
         }
-        Usuarios.create(nuevo).then(() => {
-            res.redirect('./')
-        })
+        Usuarios.create(nuevo)
+        
+        res.redirect(`/api/loged/${req.params.rut}/${req.params.mail}/usuarios`)
     },
     update: (req, res) => {
         console.log(req.body);
@@ -29,13 +29,13 @@ export const createUsuario = {
             str_dir: req.body.str_dir,
             id_co: req.body.id_co,
         }
-        Usuarios.update(rut,nuevo).then(()=>{
-            res.redirect('.././')
-        })
+        Usuarios.update(rut,nuevo)
+        
+        res.redirect(`/api/loged/${req.params.rut}/${req.params.mail}/usuarios`)
     },
     delete: (req,res) =>{
-        Usuarios.delete(req.params.vic).then(()=>{
-            res.redirect('.././')
-        })
+        Usuarios.delete(req.params.vic)
+        
+        res.redirect(`/api/loged/${req.params.rut}/${req.params.mail}/usuarios`)
     }
 }

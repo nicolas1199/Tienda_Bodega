@@ -2,7 +2,8 @@ import db from '../config/configDb.js';
 
 export const Materiales = {
   getAll: async () => {
-    const [rows] = await db.query('SELECT * FROM Materiales');
+    const [rows] = await db.query(`SELECT * FROM Materiales,Categorias
+                                  where Materiales.id_categoria = Categorias.id_categoria`);
     return rows;
   },
 

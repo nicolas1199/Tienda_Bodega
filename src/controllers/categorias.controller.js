@@ -6,18 +6,22 @@ export const createCategoria = {
         const categoria = {
             nombre_categoria: req.body.nombre_categoria
         }
-        const rows = Categorias.create(categoria);
+        Categorias.create(categoria);
 
-        res.redirect('../');
+        res.redirect(`api/loger/${req.params.rut}/${req.params.mail}/categorias`);
+
     },
     update: (req, res) => {
         Categorias.update(req.params.id, req.body.nombre_categoria)
 
-        res.redirect('../../');
+        res.redirect(`api/loger/${req.params.rut}/${req.params.mail}/categorias`);
+
     },
     delete: (req, res) => {
         Categorias.delete(req.params.id);
-        res.redirect('../../');
+
+        res.redirect(`api/loger/${req.params.rut}/${req.params.mail}/categorias`);
+
     }
 }
 
