@@ -14,19 +14,19 @@ export const general = {
     );
     console.log(rows);
 
-    if (rows != '') {
-      res.render(req.params.tabla, {
-        persona: rows,
-        usuarios: await Usuarios.getAll(),
-        materiales: await Materiales.getAll(),
-        categorias: await Categorias.getAll(),
-        carrito: await Carritos.getByRut(req.params.rut),
-        boletas: await Boletas.getAll(),
-        ventas: await Ventas.getAll(),
-        comunas: await Comunas.getAll(),
-      });
-    } else {
+    // if (rows != '') {
+    res.render(req.params.tabla, {
+      persona: rows,
+      usuarios: await Usuarios.getAll(),
+      materiales: await Materiales.getAll(),
+      categorias: await Categorias.getAll(),
+      carrito: await Carritos.getByRut(req.params.rut),
+      boletas: await Boletas.getAll(),
+      ventas: await Ventas.getAll(),
+      comunas: await Comunas.getAll(),
+    });
+    /*} else {
       res.redirect('/api/login');
-    }
+    }*/
   },
 };

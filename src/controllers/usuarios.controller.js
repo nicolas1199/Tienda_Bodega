@@ -8,7 +8,7 @@ export const createUsuario = {
   create: (req, res) => {
     try {
       const { rut, str_nombre, mail, clave, rol, str_dir, id_co } = req.body;
-      const { error } = crearUsuarioValidation(req.body);
+      const { error } = crearUsuarioValidation.validate(req.body);
 
       if (error) {
         return res.status(400).send(error.details[0].message);
@@ -36,7 +36,7 @@ export const createUsuario = {
       const { rut } = req.params;
       const { str_nombre, mail, clave, rol, str_dir, id_co } = req.body;
 
-      const { error } = updateUsuarioValidation(req.body);
+      const { error } = updateUsuarioValidation.validate(req.body);
 
       if (error) {
         return res.status(400).send(error.details[0].message);

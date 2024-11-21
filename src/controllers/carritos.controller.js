@@ -10,7 +10,12 @@ export const Carro = {
       const { id_material, rut, cantidad, precio } = req.body;
       const { mail } = req.params;
 
-      const { error } = crearCarritoValidation.validate(req.body);
+      const { error } = crearCarritoValidation.validate(
+        id_material,
+        rut,
+        cantidad,
+        precio,
+      );
 
       if (error) {
         return res.status(400).send(error.details[0].message);
@@ -31,6 +36,7 @@ export const Carro = {
       res.status(500).send('Hubo un problema al crear.');
     }
   },
+
   update: async (req, res) => {
     try {
       const { cantidad, precio } = req.body;
@@ -55,6 +61,7 @@ export const Carro = {
       res.status(500).send('Hubo un problema al actualizar.');
     }
   },
+
   delete: async (req, res) => {
     try {
       const { id, rut, mail } = req.params;
@@ -67,6 +74,7 @@ export const Carro = {
       res.status(500).send('Hubo un problema al eliminar.');
     }
   },
+
   buy: async (req, res) => {
     try {
       const { rut, mail } = req.params;
