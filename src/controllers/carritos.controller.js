@@ -1,23 +1,45 @@
 import { Carritos } from '../models/carritos.model.js';
+import {
+  crearCarritoValidation,
+  updateCarritoValidation,
+} from '../validations/carritos.validation.js';
 
 export const Carro = {
   create: (req, res) => {
-    let nuevo = {
-      id_material: req.params.id,
-      rut: req.params.rut,
-      cantidad: req.params.cantidad,
-      precio: req.params.precio,
+    const { id_material, rut, cantidad, precio } = req.body;
+
+    const { error } = crearCarritoValidation.validate(req.body);
+
+    if (error) {
+      return res.status(400).send(error.details[0].message);
+    }
+
+    const nuevoCarro = {
+      id_material: id_material,
+      rut: rut,
+      cantidad: cantidad,
+      precio: precio,
     };
-    Carritos.create(nuevo);
+
+    Carritos.create(nuevoCarro);
 
     res.redirect(`/api/loged/${req.params.rut}/${req.params.mail}/materiales`);
   },
   update: (req, res) => {
-    let nuevo = {
-      cantidad: req.body.cantidad,
-      precio: req.body.precio,
+    const { cantidad, precio } = req.body;
+    const { id, rut } = req.params;
+
+    const { error } = updateCarritoValidation.validate(req.body);
+
+    if (error) {
+      return res.status(400).send(error.details[0].message);
+    }
+
+    const updateCarrito = {
+      cantidad: cantidad,
+      precio: precio,
     };
-    Carritos.update(req.params.id, req.params.rut, nuevo);
+    Carritos.update(id, rut, updateCarrito);
 
     res.redirect(`/api/loged/${req.params.rut}/${req.params.mail}/carrito`);
   },

@@ -1,34 +1,50 @@
 import { Usuarios } from '../models/usuarios.model.js';
+import {
+  crearUsuarioValidation,
+  updateUsuarioValidation,
+} from '../validations/usuarios.validation.js';
 
 export const createUsuario = {
   create: (req, res) => {
-    console.log(req.body);
-    const nuevo = {
-      rut: req.body.rut,
-      str_nombre: req.body.str_nombre,
-      mail: req.body.mail,
-      clave: 'aux',
-      rol: req.body.rol,
-      str_dir: req.body.str_dir,
-      id_co: req.body.id_co,
+    const { rut, str_nombre, mail, clave, rol, str_dir, id_co } = req.body;
+    const { error } = crearUsuarioValidation(req.body);
+
+    if (error) {
+      return res.status(400).send(error.details[0].message);
+    }
+
+    const nuevoUsuario = {
+      rut: rut,
+      str_nombre: str_nombre,
+      mail: mail,
+      clave: clave,
+      rol: rol,
+      str_dir: str_dir,
+      id_co: id_co,
     };
-    Usuarios.create(nuevo);
+    Usuarios.create(nuevoUsuario);
 
     res.redirect(`/api/loged/${req.params.rut}/${req.params.mail}/usuarios`);
   },
   update: (req, res) => {
-    console.log(req.body);
+    const { rut } = req.params;
+    const { str_nombre, mail, clave, rol, str_dir, id_co } = req.body;
 
-    const rut = req.params.run;
-    const nuevo = {
-      str_nombre: req.body.str_nombre,
-      mail: req.body.mail,
-      clave: 'aux',
-      rol: req.body.rol,
-      str_dir: req.body.str_dir,
-      id_co: req.body.id_co,
+    const { error } = updateUsuarioValidation(req.body);
+
+    if (error) {
+      return res.status(400).send(error.details[0].message);
+    }
+
+    const updateUsuario = {
+      str_nombre: str_nombre,
+      mail: mail,
+      clave: clave,
+      rol: rol,
+      str_dir: str_dir,
+      id_co: id_co,
     };
-    Usuarios.update(rut, nuevo);
+    Usuarios.update(rut, updateUsuario);
 
     res.redirect(`/api/loged/${req.params.rut}/${req.params.mail}/usuarios`);
   },
