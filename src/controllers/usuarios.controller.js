@@ -6,51 +6,67 @@ import {
 
 export const createUsuario = {
   create: (req, res) => {
-    const { rut, str_nombre, mail, clave, rol, str_dir, id_co } = req.body;
-    const { error } = crearUsuarioValidation(req.body);
+    try {
+      const { rut, str_nombre, mail, clave, rol, str_dir, id_co } = req.body;
+      const { error } = crearUsuarioValidation(req.body);
 
-    if (error) {
-      return res.status(400).send(error.details[0].message);
+      if (error) {
+        return res.status(400).send(error.details[0].message);
+      }
+
+      const nuevoUsuario = {
+        rut: rut,
+        str_nombre: str_nombre,
+        mail: mail,
+        clave: clave,
+        rol: rol,
+        str_dir: str_dir,
+        id_co: id_co,
+      };
+      Usuarios.create(nuevoUsuario);
+
+      res.redirect(`/api/loged/${req.params.rut}/${req.params.mail}/usuarios`);
+    } catch (error) {
+      console.error('Error al crear el usuario:', error);
+      res.status(500).send('Hubo un problema al crear el usuario.');
     }
-
-    const nuevoUsuario = {
-      rut: rut,
-      str_nombre: str_nombre,
-      mail: mail,
-      clave: clave,
-      rol: rol,
-      str_dir: str_dir,
-      id_co: id_co,
-    };
-    Usuarios.create(nuevoUsuario);
-
-    res.redirect(`/api/loged/${req.params.rut}/${req.params.mail}/usuarios`);
   },
   update: (req, res) => {
-    const { rut } = req.params;
-    const { str_nombre, mail, clave, rol, str_dir, id_co } = req.body;
+    try {
+      const { rut } = req.params;
+      const { str_nombre, mail, clave, rol, str_dir, id_co } = req.body;
 
-    const { error } = updateUsuarioValidation(req.body);
+      const { error } = updateUsuarioValidation(req.body);
 
-    if (error) {
-      return res.status(400).send(error.details[0].message);
+      if (error) {
+        return res.status(400).send(error.details[0].message);
+      }
+
+      const updateUsuario = {
+        str_nombre: str_nombre,
+        mail: mail,
+        clave: clave,
+        rol: rol,
+        str_dir: str_dir,
+        id_co: id_co,
+      };
+      Usuarios.update(rut, updateUsuario);
+
+      res.redirect(`/api/loged/${req.params.rut}/${req.params.mail}/usuarios`);
+    } catch (error) {
+      console.error('Error al actualizar el usuario:', error);
+      res.status(500).send('Hubo un problema al actualizar el usuario.');
     }
-
-    const updateUsuario = {
-      str_nombre: str_nombre,
-      mail: mail,
-      clave: clave,
-      rol: rol,
-      str_dir: str_dir,
-      id_co: id_co,
-    };
-    Usuarios.update(rut, updateUsuario);
-
-    res.redirect(`/api/loged/${req.params.rut}/${req.params.mail}/usuarios`);
   },
   delete: (req, res) => {
-    Usuarios.delete(req.params.vic);
+    try {
+      const { rut } = req.params;
+      Usuarios.delete(rut);
 
-    res.redirect(`/api/loged/${req.params.rut}/${req.params.mail}/usuarios`);
+      res.redirect(`/api/loged/${req.params.rut}/${req.params.mail}/usuarios`);
+    } catch (error) {
+      console.error('Error al eliminar el usuario:', error);
+      res.status(500).send('Hubo un problema al eliminar el usuario.');
+    }
   },
 };
