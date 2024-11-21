@@ -9,7 +9,7 @@ export const createCategoria = {
     try {
       const { nombre_categoria } = req.body;
 
-      const { error } = crearCategoriaValidation(req.body);
+      const { error } = crearCategoriaValidation.validate(nombre_categoria);
 
       if (error) {
         return res.status(400).send(error.details[0].message);
@@ -31,7 +31,7 @@ export const createCategoria = {
     try {
       const { nombre_categoria } = req.body;
 
-      const { error } = updateCategoriaValidation(req.body);
+      const { error } = updateCategoriaValidation.validate(req.body);
 
       if (error) {
         return res.status(400).send(error.details[0].message);
