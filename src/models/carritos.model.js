@@ -13,12 +13,14 @@ export const Carritos = {
   },
 
   getByRut: async (rut) => {
-    const [rows] =
-      await db.query(`SELECT * FROM Carritos, Usuarios, Materiales,Categorias
+    const [rows] = await db.query(
+      `SELECT * FROM Carritos, Usuarios, Materiales,Categorias
                                   where Carritos.rut=Usuarios.rut
                                   && Carritos.id_material=Materiales.id_material
                                   && Materiales.id_categoria=Categorias.id_categoria
-                                  && Carritos.rut = '${rut}'`);
+                                  && Carritos.rut = ?`,
+      [rut],
+    );
     return rows;
   },
 
@@ -53,9 +55,12 @@ export const Carritos = {
 
     const [comprado] = await Carritos.getByRut(rut);
     comprado.forEach((producto) => {
-      db.query(`UPDATE materiales 
-                SET inventario=inventario - ${producto.cantidad} 
-                WHERE id_material=${producto.id_material}`);
+      db.query(
+        `UPDATE materiales 
+                SET inventario=inventario - ? 
+                WHERE id_material=?`,
+        [producto.cantidad, producto.id_material],
+      );
       let boleta = {
         rut: rut,
         id_material: producto.id_material,
@@ -74,6 +79,6 @@ export const Carritos = {
       hora: hora,
     };
     Ventas.create(nueva_venta);
-    db.query('DELETE FROM Carritos WHERE rut = ?');
+    db.query('DELETE FROM Carritos WHERE rut = ?')[rut];
   },
 };
