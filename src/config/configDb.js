@@ -9,7 +9,7 @@ import mysql from 'mysql2/promise';
 
 export const db = mysql.createPool({
   host: DB_HOST,
-  password:DB_PASSWORD,
+  password: DB_PASSWORD,
   port: DB_PORT,
   user: DB_USERNAME,
   database: DATABASE,

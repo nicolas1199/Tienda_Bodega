@@ -4,7 +4,8 @@ import { Ventas } from './ventas.model.js';
 
 export const Carritos = {
   getAll: async () => {
-    const [rows] = await db.query(`SELECT * FROM Carritos, Usuarios, Materiales,Categorias
+    const [rows] =
+      await db.query(`SELECT * FROM Carritos, Usuarios, Materiales,Categorias
                                   where Carritos.rut=Usuarios.rut
                                   && Carritos.id_material=Materiales.id_material
                                   && Materiales.id_categoria=Categorias.id_categoria`);
@@ -12,11 +13,14 @@ export const Carritos = {
   },
 
   getByRut: async (rut) => {
-    const [rows] = await db.query(`SELECT * FROM Carritos, Usuarios, Materiales,Categorias
+    const [rows] = await db.query(
+      `SELECT * FROM Carritos, Usuarios, Materiales,Categorias
                                   where Carritos.rut=Usuarios.rut
                                   && Carritos.id_material=Materiales.id_material
                                   && Materiales.id_categoria=Categorias.id_categoria
-                                  && Carritos.rut = '${rut}'`);
+                                  && Carritos.rut = ?`,
+      [rut],
+    );
     return rows;
   },
 
@@ -38,7 +42,10 @@ export const Carritos = {
   },
 
   delete: async (id_ca, rut) => {
-    await db.query('DELETE FROM Carritos WHERE id_ca = ? && rut = ?', [id_ca, rut]);
+    await db.query('DELETE FROM Carritos WHERE id_ca = ? && rut = ?', [
+      id_ca,
+      rut,
+    ]);
   },
   buy: async (rut) => {
     let total = 0;
@@ -47,18 +54,21 @@ export const Carritos = {
       hora = `${aux.getHours()}:${aux.getMinutes()}:${aux.getSeconds}`;
 
     const [comprado] = await Carritos.getByRut(rut);
-    comprado.forEach(producto => {
-      db.query(`UPDATE materiales 
-                SET inventario=inventario - ${producto.cantidad} 
-                WHERE id_material=${producto.id_material}`);
+    comprado.forEach((producto) => {
+      db.query(
+        `UPDATE materiales 
+                SET inventario=inventario - ? 
+                WHERE id_material=?`,
+        [producto.cantidad, producto.id_material],
+      );
       let boleta = {
         rut: rut,
         id_material: producto.id_material,
         cantidad: producto.cantidad,
         precio: producto.precio,
         fecha: fecha,
-        hora: hora
-      }
+        hora: hora,
+      };
       Boletas.create(boleta);
       total += producto.precio * producto.cantidad;
     });
@@ -66,9 +76,9 @@ export const Carritos = {
       rut: rut,
       total: total,
       fecha: fecha,
-      hora: hora
-    }
-    Ventas.create(nueva_venta)
-    db.query('DELETE FROM Carritos WHERE rut = ?')
-  }
+      hora: hora,
+    };
+    Ventas.create(nueva_venta);
+    db.query('DELETE FROM Carritos WHERE rut = ?')[rut];
+  },
 };
