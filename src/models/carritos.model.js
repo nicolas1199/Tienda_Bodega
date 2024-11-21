@@ -47,6 +47,7 @@ export const Carritos = {
       rut,
     ]);
   },
+
   buy: async (rut) => {
     let total = 0;
     const aux = new Date(),
