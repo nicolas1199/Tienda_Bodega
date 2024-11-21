@@ -1,5 +1,1 @@
-
-
-export const crateVentas ={
-    
-}
+export const crateVentas = {};

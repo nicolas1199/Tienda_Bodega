@@ -17,13 +17,7 @@ export const Boletas = {
   },
 
   create: async (boleta) => {
-    const { id_material,
-      rut,
-      cantidad,
-      precio,
-      fecha,
-      hora
-    } = boleta;
+    const { id_material, rut, cantidad, precio, fecha, hora } = boleta;
     const [result] = await db.query(
       'INSERT INTO Boletas (id_material, rut, cantidad, precio, fecha, hora) VALUES (?, ?, ?, ?, ?, ?)',
       [id_material, rut, cantidad, precio, fecha, hora],
