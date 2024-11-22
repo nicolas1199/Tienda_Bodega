@@ -470,6 +470,55 @@ CREATE TABLE Materiales (
     FOREIGN KEY (id_categoria) REFERENCES Categorias(id_Categoria)
 );
 
+insert into Materiales (id_material, precio_venta, precio_compra, inventario, nombre_material,id_categoria) values
+(1, 3990,2500,5000,'Cemento Melon especial 25kg',1),
+(2, 3990,2490,4500,'Cemento Polpaico 25kg',1),
+(3, 3500,2250,2000,'Estuco Interior 25kg',1),
+(4, 2590,2000,2300,'Estuco Exterior 25kg',1),
+(5, 19580,15000,1200,'Terciado Ranurado 9 mm 122x244 cm',2),
+(6, 22590,18600,1150,'Terciado estructural pino 18mm 1,22x2,44.',2),
+(7, 11990,9550,1500,'Tablero OSB 9 mm 122x244 cm',2),
+(8, 2990,2400,3000,'Pino Dimensionado Verde 2x3 cm 3,2 m',2),
+(9, 12580,2000,5000,'Aglomerado Estructural Cierre Perimetral 8 mm 122x244 cm',2),
+(10, 1390,980,5250,'Pino Certificado Seco Cepillado 1x2 cm 3,2 m',2),
+(11, 6090,4780,1400,'Yeso Cartón 10 mm 120x240 cm',3),
+(12, 7990,6100,1400,'Yeso Cartón 15 mm 120x240 cm',3),
+(13, 15690,12500,2200,'Plancha Fibrocemento Base Cerámico 6 mm 120x240 cm',3),
+(14, 13490,11700,1570,'Yeso Cartón Borde Rebajado 12.5 mm 120x240 cm',3),
+(15, 2590,2100,5000,'Cinta Malla 48mm x 45 m',3),
+(16, 3490,3000,800,'Bloque vidrio incoloro 19x19x8cm New Wave',4),
+(17, 1620,1180,4600,'Bloque liso gris 14x19x39 cm',4),
+(18, 1790,1250,4200,'Bloque liso gris 19x19x39 cm',4),
+(19, 310,130, 6000,'28.5x14x4.5 cm Ladrillo Fiscal Especial',4),
+(20, 10790,8600,4400,'23x6.5x2.5 cm Refractario Fachada Lisa 12 unidades',4),
+(21, 3390,3000,2500,'BLOQ VID SEAWAVE 19X19X8CM',4),
+(22, 1595,1170,3000,'Solerilla canto redondo 50x20x6 cm',4),
+(23, 36990,29670,3200,'Melamina Blanco 15 mm 183x250 cm',2),
+(24, 47890,42500,3000,'Melamina Blanco 18 mm 183x250 cm',2),
+(25, 35990,27000,2700,'Terciado Moldaje Pino Natural 15 mm 122x244 cm',2),
+(26, 55690,46900,1700,'Melamina Caramel 15 mm 183x250 cm',2),
+(27, 12122,7800,1500,'Cadena de Eslabón Corto 8 mm Metro Lineal',5),
+(28, 5590,4300,2800,'1000 gr, Alambre galvanizado corriente',5),
+(29, 3910,2200,4200,'Fierro 0 10 mm A-63 unidad 6 metros',5),
+(30, 21990,16950,2000,'2.60 x 5m. Malla Acma C- 92 Con economía de borde',5),
+(31, 2520,1790,3830,'Fierro 8 MM A-63 unidad, 6 Metros',5),
+(32, 15990,11810,2100,'Metalcon Acero 170x8 mm 4.5 m',5),
+(33, 2290,1750,2500,'1 kg Alambre negro recocido',5),
+(34, 12290,9000,3100,'100 m Alambre galvanizado',5),
+(35, 14410,10000,1000,'0.35 x 851 x 3660 mm, Plancha zinc acanalada prepintada negra',6),
+(36, 18290,13690,700,'Lana de vidrio R122 libre 50mm 0,6x10m 1 rollo',6),
+(37, 46450,38000,2300,'2.40x15 m Aislante térmico y absorbente acústico Especial',6),
+(38, 16380,12680,2200,'Espuma 3 mm con goma eva y aluminio. Aislante resistente, 1 x 10 m',6),
+(39, 7190,4500,1500,'0.35 x 895 x 2000 mm. Plancha 5V gris Recubrimiento AZM150',6);
+
+insert into Categorias(id_Categoria, nombre_categoria) values
+(1, 'Materiales de obra gruesa'),
+(2, 'Maderas y tableros'),
+(3, 'Tabiqueria'),
+(4, 'Ladrillos y bloques'),
+(5, 'Fierro'),
+(6, 'Techos y aislantes');
+
 create table Usuarios (
 rut varchar(12) not null,
 str_nombre  varchar(60) COLLATE latin1_spanish_ci NOT NULL,
