@@ -98,5 +98,4 @@ export const ventas = {
       res.status(500).send('Hubo un problema al eliminar la venta.');
     }
   },
-}
-
+};
