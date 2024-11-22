@@ -10,7 +10,8 @@ import { Ventas } from '../models/ventas.model.js';
 export const general = {
   getAll: async (req, res) => {
     const [rows] = await db.query(
-      `select * from Usuarios where rut='${req.params.rut}' && mail='${req.params.mail}'`,
+      `select * from Usuarios where rut = ? && mail = ?`,
+      [req.params.rut, req.params.mail]
     );
     console.log(rows);
 
