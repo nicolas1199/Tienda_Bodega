@@ -5,7 +5,7 @@ export const boletas = {
   // Crear una boleta
   create: async (req, res) => {
     try {
-      const { rut, mail } = req.params;
+      const { rut } = req.params;
       const carrito = await Carritos.getByRut(rut);
 
       // Si el carrito está vacío, no se puede generar una boleta
@@ -36,7 +36,7 @@ export const boletas = {
       await Carritos.delete(id_ca, rut);
 
       // Redirigir a la página de la boleta
-      res.redirect(`/api/loged/${rut}/${mail}/boletas`);
+      res.redirect(`/api/loged/boletas`);
     } catch (error) {
       console.error('Error al crear la boleta:', error);
       res.status(500).send('Hubo un problema al generar la boleta.');
@@ -70,12 +70,12 @@ export const boletas = {
   // Eliminar una boleta por su id
   delete: async (req, res) => {
     try {
-      const { id, rut, mail } = req.params;
+      const { id } = req.params;
       const boletaId = id;
       await Boletas.delete(boletaId);
 
       // Redirigir a la página de boletas después de la eliminación
-      res.redirect(`/api/loged/${rut}/${mail}/boletas`);
+      res.redirect(`/api/loged/boletas`);
     } catch (error) {
       console.error('Error al eliminar la boleta:', error);
       res.status(500).send('Hubo un problema al eliminar la boleta.');

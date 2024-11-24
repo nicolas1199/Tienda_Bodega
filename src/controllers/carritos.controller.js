@@ -7,7 +7,7 @@ import {
 export const Carro = {
   create: async (req, res) => {
     try {
-      const { id_material, rut, cantidad, precio } = req.body;
+      const { id_material, rut, cantidad, precio } = req.params;
       const { mail } = req.params;
 
       const { error } = crearCarritoValidation.validate(
@@ -30,7 +30,7 @@ export const Carro = {
 
       await Carritos.create(nuevoCarro);
 
-      res.redirect(`/api/loged/${req.params.rut}/${mail}/materiales`);
+      res.redirect(`/api/loged/materiales`);
     } catch (error) {
       console.error('Error al crear:', error);
       res.status(500).send('Hubo un problema al crear.');
@@ -40,7 +40,7 @@ export const Carro = {
   update: async (req, res) => {
     try {
       const { cantidad, precio } = req.body;
-      const { id, rut, mail } = req.params;
+      const { id, rut } = req.params;
 
       const { error } = updateCarritoValidation.validate(req.body);
 
@@ -55,7 +55,7 @@ export const Carro = {
 
       await Carritos.update(id, rut, updateCarrito);
 
-      res.redirect(`/api/loged/${rut}/${mail}/carrito`);
+      res.redirect(`/api/loged/carrito`);
     } catch (error) {
       console.error('Error al actualizar:', error);
       res.status(500).send('Hubo un problema al actualizar.');
@@ -64,11 +64,11 @@ export const Carro = {
 
   delete: async (req, res) => {
     try {
-      const { id, rut, mail } = req.params;
+      const { id, rut } = req.params;
 
       await Carritos.delete(id, rut);
 
-      res.redirect(`/api/loged/${rut}/${mail}/carrito`);
+      res.redirect(`/api/loged/carrito`);
     } catch (error) {
       console.error('Error al eliminar:', error);
       res.status(500).send('Hubo un problema al eliminar.');
@@ -77,10 +77,14 @@ export const Carro = {
 
   buy: async (req, res) => {
     try {
-      const { rut, mail } = req.params;
+      /**
+       * @rut parametro que se escribe en la URL al momento de comprar para despues vaciar los
+       * elementos del carrito con ese rut 
+       */
+      const { rut } = req.params; 
       await Carritos.buy(rut);
 
-      res.redirect(`/api/loged/${rut}/${mail}/carrito`);
+      res.redirect(`/api/loged/carrito`);
     } catch (error) {
       console.error('Error al comprar:', error);
       res.status(500).send('Hubo un problema al comprar.');

@@ -1,3 +1,14 @@
+DROP TABLE IF EXISTS `region_cl`;
+DROP TABLE IF EXISTS `provincia_cl`;
+DROP TABLE IF EXISTS `Boletas`;
+DROP TABLE IF EXISTS `Ventas`;
+DROP TABLE IF EXISTS `Carritos`;
+DROP TABLE IF EXISTS `Materiales`;
+DROP TABLE IF EXISTS `Ingresado`;
+DROP TABLE IF EXISTS `Categorias`;
+DROP TABLE IF EXISTS `Usuarios`;
+DROP TABLE IF EXISTS `comuna_cl`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `region_cl` (
@@ -28,7 +39,7 @@ INSERT INTO `region_cl` VALUES 	(1,'ARICA Y PARINACOTA','XV',2,4),
 				(15,'METROPOLITANA DE SANTIAGO','RM',6,52);
 
 
-DROP TABLE IF EXISTS `provincia_cl`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `provincia_cl` (
@@ -96,7 +107,7 @@ INSERT INTO `provincia_cl` VALUES 	(1,1,'ARICA',2),
 					(53,15,'MELIPILLA',5),
 					(54,15,'TALAGANTE',5);
 
-DROP TABLE IF EXISTS `comuna_cl`;
+
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `comuna_cl` (
@@ -460,12 +471,20 @@ CREATE TABLE Categorias(
     nombre_categoria VARCHAR(64)
 );
 
+insert into Categorias(id_Categoria, nombre_categoria) values
+(1, 'Materiales de obra gruesa'),
+(2, 'Maderas y tableros'),
+(3, 'Tabiqueria'),
+(4, 'Ladrillos y bloques'),
+(5, 'Fierro'),
+(6, 'Techos y aislantes');
+
 CREATE TABLE Materiales (
     id_material INT PRIMARY KEY AUTO_INCREMENT,
     precio_venta INT,
     precio_compra INT,
     inventario INT,
-    nombre_material VARCHAR(64),
+    nombre_material VARCHAR(80),
     id_categoria INT,
     FOREIGN KEY (id_categoria) REFERENCES Categorias(id_Categoria)
 );
@@ -511,13 +530,6 @@ insert into Materiales (id_material, precio_venta, precio_compra, inventario, no
 (38, 16380,12680,2200,'Espuma 3 mm con goma eva y aluminio. Aislante resistente, 1 x 10 m',6),
 (39, 7190,4500,1500,'0.35 x 895 x 2000 mm. Plancha 5V gris Recubrimiento AZM150',6);
 
-insert into Categorias(id_Categoria, nombre_categoria) values
-(1, 'Materiales de obra gruesa'),
-(2, 'Maderas y tableros'),
-(3, 'Tabiqueria'),
-(4, 'Ladrillos y bloques'),
-(5, 'Fierro'),
-(6, 'Techos y aislantes');
 
 create table Usuarios (
 rut varchar(12) not null,
@@ -532,6 +544,7 @@ foreign key (id_co) references comuna_cl(id_co)
 );
 
 insert into Usuarios values
+('null','Visita','visita@null','aux','visita','Indefinido',1),
 ('14571589-K', 'Agustín Díaz', 'cliente@gmail.com', 'aux', 'cliente', 'Avenida Portales', 327),
 ('20824959-2', 'Bernardo Larson', 'blarson1101@gmail.com', 'aux', 'trabajador', 'Almirante Montt', 51),
 ('17456938-5', 'Arturo Reyes', 'ceo1@gmail.com', 'aux', 'jefe', 'Collao',	146);
@@ -569,4 +582,17 @@ precio int not null,
 primary key (id_ca),
 foreign key (rut) references Usuarios(rut),
 foreign key (id_material) references Materiales(id_material)
+);
+
+
+CREATE TABLE `Ingresado`(
+rut varchar(12) not null,
+str_nombre  varchar(60) COLLATE latin1_spanish_ci NOT NULL,
+mail  varchar(60) NOT NULL,
+clave  varchar(60) COLLATE latin1_spanish_ci NOT NULL,
+rol varchar(30) COLLATE latin1_spanish_ci not null,
+str_dir  varchar(60) COLLATE latin1_spanish_ci NOT NULL,
+id_co int(11) not null,
+primary key (rut),
+foreign key (id_co) references comuna_cl(id_co)
 );

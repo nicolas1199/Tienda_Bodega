@@ -70,7 +70,7 @@ export const productos = {
       const { id, rut, mail } = req.params;
 
       Materiales.delete(id);
-      res.render(`/api/loged/${rut}/${mail}/materiales`);
+      res.render(`/api/loged/materiales`);
     } catch (error) {
       console.error('Error al eliminar el material:', error);
       res.status(500).send('Hubo un problema al eliminar el material.');

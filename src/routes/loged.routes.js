@@ -8,26 +8,26 @@ import { Carro } from '../controllers/carritos.controller.js';
 const logedRouter = Router();
 
 //Mostrar la tabla indicada en la url
-logedRouter.get('/:rut/:mail/:tabla', general.getAll);
+logedRouter.get('/:tabla', general.getAll);
 
 //rutas del Carrito
-logedRouter.get('/:rut/:mail/carrito/delete/:id', Carro.delete);
-logedRouter.put('/:rut/:mail/carrito/update/:id', Carro.update);
-logedRouter.delete('/:rut/:mail/:carrito/buy', Carro.buy);
+logedRouter.get('/carrito/delete/:id', Carro.delete);
+logedRouter.put('/carrito/update/:id', Carro.update);
+logedRouter.delete('/carrito/buy/:rut', Carro.buy);
 //desde la tabla materiales porque la accion es desde ahí
 logedRouter.get(
-  '/:rut/:mail/materiales/a_carrito/:id/:cantidad/:precio',
+  '/materiales/a_carrito/:rut/:id/:cantidad/:precio',
   Carro.create,
 );
 
 //rutas de Categorias
-logedRouter.post('/:rut/:mail/categorias/create', createCategoria.create);
-logedRouter.get('/:rut/:mail/categorias/delete/:id', createCategoria.delete);
-logedRouter.get('/:rut/:mail/categorias/update/:id', createCategoria.update);
+logedRouter.post('/categorias/create', createCategoria.create);
+logedRouter.get('/categorias/delete/:id', createCategoria.delete);
+logedRouter.get('/categorias/update/:id', createCategoria.update);
 
 //Rutas de usuarios
-logedRouter.post('/:rut/:mail/usuarios/create', createUsuario.create);
-logedRouter.get('/:rut/:mail/usuarios/delete/:vic', createUsuario.delete);
-logedRouter.post('/:rut/:mail/usuarios/update/:run', createUsuario.update);
+logedRouter.post('/usuarios/create', createUsuario.create);
+logedRouter.get('/usuarios/delete/:vic', createUsuario.delete);
+logedRouter.post('/usuarios/update/:run', createUsuario.update);
 
 export default logedRouter;

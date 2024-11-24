@@ -51,7 +51,7 @@ export const createCategoria = {
 
       Categorias.delete(id);
 
-      res.redirect(`api/loger/${rut}/${mail}/categorias`);
+      res.redirect(`api/loger/categorias`);
     } catch (error) {
       console.error('Error al eliminar la categoria:', error);
       res.status(500).send('Hubo un problema al eliminar la categoria.');

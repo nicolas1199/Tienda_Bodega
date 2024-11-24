@@ -10,7 +10,7 @@ export const Usuarios = {
     return rows;
   },
 
-  getById: async (rut) => {
+  getByRut: async (rut) => {
     const [rows] = await db.query('SELECT * FROM Usuarios WHERE rut = ?', [
       rut,
     ]);
