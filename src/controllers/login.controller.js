@@ -22,7 +22,6 @@ export const login = {
       const rows = Ingresado.verif(mail,clave);
 
       rows.then((msg)=>{
-        console.log(msg[0]);
         
         Ingresado.login(msg[0]);
       })

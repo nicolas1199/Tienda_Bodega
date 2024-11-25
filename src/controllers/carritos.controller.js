@@ -8,8 +8,7 @@ export const Carro = {
   create: async (req, res) => {
     try {
       const { id_material, rut, cantidad, precio } = req.params;
-      const { mail } = req.params;
-
+      
       const { error } = crearCarritoValidation.validate(
         id_material,
         rut,

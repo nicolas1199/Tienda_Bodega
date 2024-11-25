@@ -16,7 +16,7 @@ export const ventas = {
       const ventaId = await Ventas.create(nuevaVenta);
 
       // Redirigir a la vista de ventas después de crearla
-      res.redirect(`/api/loged/${req.params.rut}/${req.params.mail}/ventas`);
+      res.redirect(`/api/loged/ventas`);
     } catch (error) {
       console.error('Error al crear la venta:', error);
       res.status(500).send('Hubo un problema al crear la venta.');
@@ -79,7 +79,7 @@ export const ventas = {
       await Ventas.update(req.params.id, ventaActualizada);
 
       // Redirigir a la lista de ventas después de la actualización
-      res.redirect(`/api/loged/${req.params.rut}/${req.params.mail}/ventas`);
+      res.redirect(`/api/loged/ventas`);
     } catch (error) {
       console.error('Error al actualizar la venta:', error);
       res.status(500).send('Hubo un problema al actualizar la venta.');
@@ -92,7 +92,7 @@ export const ventas = {
       await Ventas.delete(req.params.id);
 
       // Redirigir a la lista de ventas después de eliminarla
-      res.redirect(`/api/loged/${req.params.rut}/${req.params.mail}/ventas`);
+      res.redirect(`/api/loged/ventas`);
     } catch (error) {
       console.error('Error al eliminar la venta:', error);
       res.status(500).send('Hubo un problema al eliminar la venta.');
