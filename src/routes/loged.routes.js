@@ -4,6 +4,7 @@ import { general } from '../controllers/general.controller.js';
 import { createUsuario } from '../controllers/usuarios.controller.js';
 import { createCategoria } from '../controllers/categorias.controller.js';
 import { Carro } from '../controllers/carritos.controller.js';
+import { productos } from '../controllers/materiales.controller.js';
 
 const logedRouter = Router();
 
@@ -19,6 +20,12 @@ logedRouter.get(
   '/materiales/a_carrito/:rut/:id/:cantidad/:precio',
   Carro.create,
 );
+
+//rutas de los materiales
+logedRouter.post('/materiales/create', productos.create);
+logedRouter.get('/materiales/update/:id', productos.create);
+logedRouter.delete('/materiales/delete/:id', productos.create);
+
 
 //rutas de Categorias
 logedRouter.post('/categorias/create', createCategoria.create);
