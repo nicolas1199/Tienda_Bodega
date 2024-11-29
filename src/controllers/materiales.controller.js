@@ -28,10 +28,19 @@ export const productos = {
         id_categoria: id_categoria,
       };
       Materiales.create(nuevoMaterial);
-      res.redirect(`/api/loged/materiales`);
+      res.redirect('/api/loged/materiales');
     } catch (error) {
       console.error('Error al crear el material:', error);
       res.status(500).send('Hubo un problema al crear el material.');
+    }
+  },
+  getAll: async (req, res) => {
+    try {
+      const materiales = await Materiales.getAll();
+      res.status(200).json(materiales);
+    } catch (error) {
+      console.error('Error al obtener los materiales:', error);
+      res.status(500).send('Hubo un problema al obtener los materiales.');
     }
   },
   update: (req, res) => {
@@ -59,7 +68,7 @@ export const productos = {
       };
 
       Materiales.update(req.params.id, updateMaterial);
-      res.redirect(`/api/loged/materiales`);
+      res.redirect('/api/loged/materiales');
     } catch (error) {
       console.error('Error al actualizar el material:', error);
       res.status(500).send('Hubo un problema al actualizar el material.');
@@ -67,10 +76,10 @@ export const productos = {
   },
   delete: (req, res) => {
     try {
-      const { id, rut, mail } = req.params;
+      const { id } = req.params;
 
       Materiales.delete(id);
-      res.redirect(`/api/loged/materiales`);
+      res.redirect('/api/loged/materiales');
     } catch (error) {
       console.error('Error al eliminar el material:', error);
       res.status(500).send('Hubo un problema al eliminar el material.');

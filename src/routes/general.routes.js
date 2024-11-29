@@ -10,6 +10,6 @@ generalRouter.use('/loged', logedRouter);
 
 //Rutas de verificacion y renderizado
 generalRouter.get('/login', login.get);
-generalRouter.post('/login/verif', login.verif);
+generalRouter.post('/login', login.verif);
 
 export default generalRouter;

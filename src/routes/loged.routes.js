@@ -8,9 +8,6 @@ import { productos } from '../controllers/materiales.controller.js';
 
 const logedRouter = Router();
 
-//Mostrar la tabla indicada en la url
-logedRouter.get('/:tabla', general.getAll);
-
 //rutas del Carrito
 logedRouter.get('/carrito/delete/:id', Carro.delete);
 logedRouter.put('/carrito/update/:id', Carro.update);
@@ -23,14 +20,15 @@ logedRouter.get(
 
 //rutas de los materiales
 logedRouter.post('/materiales/create', productos.create);
-logedRouter.get('/materiales/update/:id', productos.create);
-logedRouter.delete('/materiales/delete/:id', productos.create);
-
+logedRouter.get('/materiales', productos.getAll);
+logedRouter.put('/materiales/update/:id', productos.update);
+logedRouter.delete('/materiales/delete/:id', productos.delete);
 
 //rutas de Categorias
 logedRouter.post('/categorias/create', createCategoria.create);
-logedRouter.get('/categorias/delete/:id', createCategoria.delete);
-logedRouter.get('/categorias/update/:id', createCategoria.update);
+logedRouter.get('/categorias', createCategoria.getAll);
+logedRouter.delete('/categorias/delete/:id', createCategoria.delete);
+logedRouter.put('/categorias/update/:id', createCategoria.update);
 
 //Rutas de usuarios
 logedRouter.post('/usuarios/create', createUsuario.create);

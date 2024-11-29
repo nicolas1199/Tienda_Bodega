@@ -36,7 +36,7 @@ export const boletas = {
       await Carritos.delete(id_ca, rut);
 
       // Redirigir a la página de la boleta
-      res.redirect(`/api/loged/boletas`);
+      res.redirect('/api/loged/boletas');
     } catch (error) {
       console.error('Error al crear la boleta:', error);
       res.status(500).send('Hubo un problema al generar la boleta.');
@@ -56,11 +56,7 @@ export const boletas = {
           .send('No se encontraron boletas para este usuario.');
       }
 
-      // Renderizar las boletas en la vista
-      res.render('boletas', {
-        boletas: boletas,
-        usuario: rut,
-      });
+      res.json(boletas);
     } catch (error) {
       console.error('Error al obtener las boletas:', error);
       res.status(500).send('Hubo un problema al obtener las boletas.');
@@ -75,7 +71,7 @@ export const boletas = {
       await Boletas.delete(boletaId);
 
       // Redirigir a la página de boletas después de la eliminación
-      res.redirect(`/api/loged/boletas`);
+      res.redirect('/api/loged/boletas');
     } catch (error) {
       console.error('Error al eliminar la boleta:', error);
       res.status(500).send('Hubo un problema al eliminar la boleta.');

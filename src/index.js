@@ -2,10 +2,8 @@
 import cors from 'cors';
 import morgan from 'morgan';
 import express, { json, urlencoded } from 'express';
-import path, { dirname } from 'path';
 import indexRoutes from './routes/index.routes.js';
 import { HOST, PORT } from './config/configEnv.js';
-import { fileURLToPath } from 'url';
 
 async function setupServer() {
   try {
@@ -33,12 +31,6 @@ async function setupServer() {
         extended: true,
         limit: '1mb',
       }),
-    );
-
-    app.set('view engine', 'ejs');
-    app.set(
-      'views',
-      path.join(dirname(fileURLToPath(import.meta.url)), 'views'),
     );
 
     //routes

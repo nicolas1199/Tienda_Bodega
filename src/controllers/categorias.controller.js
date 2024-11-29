@@ -21,10 +21,20 @@ export const createCategoria = {
 
       Categorias.create(nuevaCategoria);
 
-      res.redirect(`api/loged/categorias`);
+      res.redirect('api/loged/categorias');
     } catch (error) {
       console.error('Error al crear la categoria:', error);
       res.status(500).send('Hubo un problema al crear la categoria.');
+    }
+  },
+  getAll: async (req, res) => {
+    try {
+      const categorias = await Categorias.getAll();
+
+      res.send(categorias);
+    } catch (error) {
+      console.error('Error al obtener las categorias:', error);
+      res.status(500).send('Hubo un problema al obtener las categorias.');
     }
   },
   update: (req, res) => {
@@ -39,7 +49,7 @@ export const createCategoria = {
 
       Categorias.update(req.params.id, nombre_categoria);
 
-      res.redirect(`api/loged/categorias`);
+      res.redirect('api/loged/categorias');
     } catch (error) {
       console.error('Error al actualizar la categoria:', error);
       res.status(500).send('Hubo un problema al actualizar la categoria.');
@@ -51,7 +61,7 @@ export const createCategoria = {
 
       Categorias.delete(id);
 
-      res.redirect(`api/loged/categorias`);
+      res.redirect('api/loged/categorias');
     } catch (error) {
       console.error('Error al eliminar la categoria:', error);
       res.status(500).send('Hubo un problema al eliminar la categoria.');
