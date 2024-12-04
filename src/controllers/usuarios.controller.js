@@ -25,7 +25,7 @@ export const createUsuario = {
       };
       Usuarios.create(nuevoUsuario);
 
-      res.redirect(`/api/loged/usuarios`);
+      res.json({ message: 'Usuario creado correctamente.' });
     } catch (error) {
       console.error('Error al crear el usuario:', error);
       res.status(500).send('Hubo un problema al crear el usuario.');
@@ -52,7 +52,7 @@ export const createUsuario = {
       };
       Usuarios.update(rut, updateUsuario);
 
-      res.redirect(`/api/loged/usuarios`);
+      res.redirect('/api/loged/usuarios');
     } catch (error) {
       console.error('Error al actualizar el usuario:', error);
       res.status(500).send('Hubo un problema al actualizar el usuario.');
@@ -63,7 +63,7 @@ export const createUsuario = {
       const { rut } = req.params;
       Usuarios.delete(rut);
 
-      res.redirect(`/api/loged/usuarios`);
+      res.redirect('/api/loged/usuarios');
     } catch (error) {
       console.error('Error al eliminar el usuario:', error);
       res.status(500).send('Hubo un problema al eliminar el usuario.');

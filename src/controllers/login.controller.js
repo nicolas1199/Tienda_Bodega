@@ -1,12 +1,8 @@
-import { Ingresado } from '../models/Ingresado.model.js';
+import { Usuarios } from '../models/usuarios.model.js';
 import { loginValidation } from '../validations/usuarios.validation.js';
 
-export const login = {
-  get: (req, res) => {
-    Ingresado.LogOut();
-    console.log('Sin usuario ingresado');
-  },
-  verif: (req, res) => {
+export const loginUser = {
+  login: async (req, res) => {
     try {
       const { mail, clave } = req.body;
 
@@ -15,19 +11,22 @@ export const login = {
       if (error) {
         return res.status(400).send(error.details[0].message);
       }
-      Ingresado.LogOut();
-      const rows = Ingresado.verif(mail,clave);
 
-      rows.then((msg)=>{
-        
-        Ingresado.login(msg[0]);
-        console.log('Ingresado');
-        return res.redirect('/api/loged/materiales')
-      })
-      
+      const user = await Usuarios.login(mail, clave);
+
+      if (!user) {
+        return res.status(400).send('Usuario o contraseña incorrectos.');
+      }
+
+      req.session.user_mail = mail;
+      req.session.user_rol = user.rol;
+
+      console.log(req.session);
+
+      return res.send('Sesión iniciada.');
     } catch (error) {
-      console.error('Error al verificar el usuario:', error);
-      res.status(500).send('Hubo un problema al verificar el usuario.');
+      console.error('Error al iniciar sesión:', error);
+      res.status(500).send('Hubo un problema al iniciar sesión.');
     }
   },
 };
