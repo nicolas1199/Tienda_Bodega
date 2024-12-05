@@ -18,6 +18,18 @@ import mysql from 'mysql2/promise';
 
 const MySQLStoreImport = MySQLStore(session);
 
+const options = {
+  host: DB_HOST,
+  port: DB_PORT,
+  user: DB_USERNAME,
+  password: DB_PASSWORD,
+  database: DATABASE,
+};
+
+const connection = await mysql.createConnection(options);
+
+export const sessionStore = new MySQLStoreImport({}, connection);
+
 async function setupServer() {
   try {
     const app = express();
@@ -39,30 +51,19 @@ async function setupServer() {
 
     app.use(morgan('dev'));
 
-    const options = {
-      host: DB_HOST,
-      port: DB_PORT,
-      user: DB_USERNAME,
-      password: DB_PASSWORD,
-      database: DATABASE,
-    };
-
-    const connection = await mysql.createConnection(options);
-
-    const sessionStore = new MySQLStoreImport({}, connection);
-
     app.use(
       session({
+        name: 'sessionID',
         secret: 'Super Secreto',
         saveUninitialized: false,
         resave: false,
         store: sessionStore,
-        httpOnly: false,
         cookie: {
+          httpOnly: false,
           maxAge: 600000 * 60,
           secure: false,
+          sameSite: 'lax',
         },
-        domain: 'localhost',
       }),
     );
 
