@@ -31,8 +31,9 @@ logedRouter.delete('/categorias/delete/:id', createCategoria.delete);
 logedRouter.put('/categorias/update/:id', createCategoria.update);
 
 //Rutas de usuarios
+logedRouter.get('/usuarios', createUsuario.getAll);
 logedRouter.post('/usuarios/create', createUsuario.create);
-logedRouter.get('/usuarios/delete/:vic', createUsuario.delete);
-logedRouter.post('/usuarios/update/:run', createUsuario.update);
+logedRouter.delete('/usuarios/delete/:vic', createUsuario.delete);
+logedRouter.put('/usuarios/update/:run', createUsuario.update);
 
 export default logedRouter;
