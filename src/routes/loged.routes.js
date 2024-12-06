@@ -1,10 +1,10 @@
 import { Router } from 'express';
 
-import { general } from '../controllers/general.controller.js';
 import { createUsuario } from '../controllers/usuarios.controller.js';
 import { createCategoria } from '../controllers/categorias.controller.js';
 import { Carro } from '../controllers/carritos.controller.js';
 import { productos } from '../controllers/materiales.controller.js';
+import { sessionController } from '../controllers/session.controller.js';
 
 const logedRouter = Router();
 
@@ -35,5 +35,8 @@ logedRouter.get('/usuarios', createUsuario.getAll);
 logedRouter.post('/usuarios/create', createUsuario.create);
 logedRouter.delete('/usuarios/delete/:vic', createUsuario.delete);
 logedRouter.put('/usuarios/update/:run', createUsuario.update);
+
+//Rutas de sesion
+logedRouter.post('/session', sessionController.getSession);
 
 export default logedRouter;

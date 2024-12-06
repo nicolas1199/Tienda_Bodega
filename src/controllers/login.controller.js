@@ -1,3 +1,4 @@
+import { sessionStore } from '../index.js';
 import { Usuarios } from '../models/usuarios.model.js';
 import { loginValidation } from '../validations/usuarios.validation.js';
 
@@ -18,9 +19,10 @@ export const loginUser = {
         return res.status(400).send('Usuario o contraseña incorrectos.');
       }
 
-      req.session.user_mail = mail;
-      req.session.user_rol = user.rol;
-
+      req.session.user = {
+        mail: user.mail,
+        rol: user.rol,
+      };
       console.log(req.session);
 
       return res.send('Sesión iniciada.');
@@ -28,5 +30,11 @@ export const loginUser = {
       console.error('Error al iniciar sesión:', error);
       res.status(500).send('Hubo un problema al iniciar sesión.');
     }
+  },
+  logout: (req, res) => {
+    console.log('Cerrando sesión:', req.session);
+    req.session.destroy();
+    sessionStore.close().then(() => console.log('Sesión cerrada.'));
+    res.clearCookie('user').send('Sesión cerrada.');
   },
 };

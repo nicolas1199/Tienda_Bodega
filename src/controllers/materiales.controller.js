@@ -45,6 +45,7 @@ export const productos = {
   },
   update: (req, res) => {
     try {
+      const id = req.params.id;
       const {
         precio_venta,
         precio_compra,
@@ -53,7 +54,15 @@ export const productos = {
         id_categoria,
       } = req.body;
 
-      const { error } = updateMaterialValidation.validate(req.body);
+      const tovalidate = {
+        precio_venta,
+        precio_compra,
+        inventario,
+        nombre_material,
+        id_categoria,
+      };
+
+      const { error } = updateMaterialValidation.validate(tovalidate);
 
       if (error) {
         return res.status(400).json({ error: error.details[0].message });
@@ -67,8 +76,9 @@ export const productos = {
         id_categoria: id_categoria,
       };
 
-      Materiales.update(req.params.id, updateMaterial);
-      res.redirect('/api/loged/materiales');
+      console.log('updateMaterial', updateMaterial);
+      Materiales.update(id, updateMaterial);
+      res.json({ message: 'Material actualizado' });
     } catch (error) {
       console.error('Error al actualizar el material:', error);
       res.status(500).send('Hubo un problema al actualizar el material.');
@@ -77,9 +87,10 @@ export const productos = {
   delete: (req, res) => {
     try {
       const { id } = req.params;
+      console.log('id', id);
 
-      Materiales.delete(id);
-      res.redirect('/api/loged/materiales');
+      /* Materiales.delete(id); */
+      res.json({ message: 'Material eliminado' });
     } catch (error) {
       console.error('Error al eliminar el material:', error);
       res.status(500).send('Hubo un problema al eliminar el material.');

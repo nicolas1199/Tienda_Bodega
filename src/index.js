@@ -18,9 +18,27 @@
 
   const MySQLStoreImport = MySQLStore(session);
 
+<<<<<<< HEAD
   async function setupServer() {
     try {
       const app = express();
+=======
+const options = {
+  host: DB_HOST,
+  port: DB_PORT,
+  user: DB_USERNAME,
+  password: DB_PASSWORD,
+  database: DATABASE,
+};
+
+const connection = await mysql.createConnection(options);
+
+export const sessionStore = new MySQLStoreImport({}, connection);
+
+async function setupServer() {
+  try {
+    const app = express();
+>>>>>>> b511a7ce1c424ffd9bd0f1d7bb02617d83ecfa0d
 
       app.disable('x-powered-by');
 
@@ -39,6 +57,7 @@
 
       app.use(morgan('dev'));
 
+<<<<<<< HEAD
       const options = {
         host: DB_HOST,
         port: DB_PORT,
@@ -65,6 +84,23 @@
           domain: 'localhost',
         }),
       );
+=======
+    app.use(
+      session({
+        name: 'sessionID',
+        secret: 'Super Secreto',
+        saveUninitialized: false,
+        resave: false,
+        store: sessionStore,
+        cookie: {
+          httpOnly: false,
+          maxAge: 600000 * 60,
+          secure: false,
+          sameSite: 'lax',
+        },
+      }),
+    );
+>>>>>>> b511a7ce1c424ffd9bd0f1d7bb02617d83ecfa0d
 
       app.use(
         urlencoded({
