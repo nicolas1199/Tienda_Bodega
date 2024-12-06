@@ -89,7 +89,7 @@ export const productos = {
       const { id } = req.params;
       console.log('id', id);
 
-      /* Materiales.delete(id); */
+      Materiales.delete(id);
       res.json({ message: 'Material eliminado' });
     } catch (error) {
       console.error('Error al eliminar el material:', error);
