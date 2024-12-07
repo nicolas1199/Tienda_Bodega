@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { login } from '../controllers/login.controller.js';
+import { loginUser } from '../controllers/login.controller.js';
 import logedRouter from './loged.routes.js';
 
 const generalRouter = Router();
@@ -9,7 +9,8 @@ const generalRouter = Router();
 generalRouter.use('/loged', logedRouter);
 
 //Rutas de verificacion y renderizado
-generalRouter.get('/login', login.get);
-generalRouter.post('/login/verif', login.verif);
+
+generalRouter.post('/login', loginUser.login);
+generalRouter.post('/logout', loginUser.logout);
 
 export default generalRouter;

@@ -37,4 +37,12 @@ export const Usuarios = {
   delete: async (rut) => {
     await db.query('DELETE FROM Usuarios WHERE rut = ?', [rut]);
   },
+
+  login: async (mail, clave) => {
+    const [rows] = await db.query(
+      'SELECT * FROM Usuarios WHERE mail = ? AND clave = ?',
+      [mail, clave],
+    );
+    return rows[0];
+  },
 };

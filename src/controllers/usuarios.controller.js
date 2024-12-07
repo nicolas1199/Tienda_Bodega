@@ -5,6 +5,7 @@ import {
 } from '../validations/usuarios.validation.js';
 
 export const createUsuario = {
+
   create: (req, res) => {
     try {
       const { rut, str_nombre, mail, clave, rol, str_dir, id_co } = req.body;
@@ -25,10 +26,21 @@ export const createUsuario = {
       };
       Usuarios.create(nuevoUsuario);
 
-      res.redirect(`/api/loged/usuarios`);
+      res.json({ message: 'Usuario creado correctamente.' });
     } catch (error) {
       console.error('Error al crear el usuario:', error);
       res.status(500).send('Hubo un problema al crear el usuario.');
+    }
+  },
+  getAll: async (req, res) => {
+    console.log('Solicitud GET a /usuarios recibida');
+    try {
+        const usuarios = await Usuarios.getAll();
+        console.log('Usuarios obtenidos:', usuarios);
+        res.status(200).json(usuarios);
+    } catch (error) {
+        console.error('Error al obtener usuarios:', error);
+        res.status(500).send('Hubo un problema al obtener los usuarios.');
     }
   },
   update: (req, res) => {
@@ -52,7 +64,7 @@ export const createUsuario = {
       };
       Usuarios.update(rut, updateUsuario);
 
-      res.redirect(`/api/loged/usuarios`);
+      res.redirect('/api/loged/usuarios');
     } catch (error) {
       console.error('Error al actualizar el usuario:', error);
       res.status(500).send('Hubo un problema al actualizar el usuario.');
@@ -63,7 +75,7 @@ export const createUsuario = {
       const { rut } = req.params;
       Usuarios.delete(rut);
 
-      res.redirect(`/api/loged/usuarios`);
+      res.redirect('/api/loged/usuarios');
     } catch (error) {
       console.error('Error al eliminar el usuario:', error);
       res.status(500).send('Hubo un problema al eliminar el usuario.');
