@@ -23,7 +23,6 @@ export const loginUser = {
         mail: user.mail,
         rol: user.rol,
       };
-      console.log(req.session);
 
       return res.send('Sesión iniciada.');
     } catch (error) {
