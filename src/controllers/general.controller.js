@@ -12,10 +12,8 @@ export const general = {
   getAll: async (req, res) => {
     
     const rows = await Ingresado.getUser()
-    console.log(rows);
-    
     if (rows) {
-    res.render(req.params.tabla, {
+    res.json({
       persona: rows,
       usuarios: await Usuarios.getAll(),
       materiales: await Materiales.getAll(),
