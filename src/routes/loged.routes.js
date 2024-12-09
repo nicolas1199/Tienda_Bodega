@@ -33,7 +33,7 @@ logedRouter.put('/categorias/update/:id', createCategoria.update);
 //Rutas de usuarios
 logedRouter.get('/usuarios', createUsuario.getAll);
 logedRouter.post('/usuarios/create', createUsuario.create);
-logedRouter.delete('/usuarios/delete/:vic', createUsuario.delete);
+logedRouter.delete('/usuarios/delete/:rut', createUsuario.delete);
 logedRouter.put('/usuarios/update/', createUsuario.update);
 
 //Rutas de sesion
