@@ -37,6 +37,6 @@ logedRouter.delete('/usuarios/delete/:rut', createUsuario.delete);
 logedRouter.put('/usuarios/update/', createUsuario.update);
 
 //Rutas de sesion
-logedRouter.post('/session', sessionController.getSession);
+logedRouter.get('/session', sessionController.getSession);
 
 export default logedRouter;

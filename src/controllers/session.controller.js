@@ -3,21 +3,19 @@ import session from '../models/session.model.js';
 export const sessionController = {
   getSession: async (req, res) => {
     try {
-      const { sessionID } = req.body;
+      if (req.session && req.session.user) {
+        const sessionIDBackend = await session.get(req.session.id);
 
-      if (!sessionID) {
-        return res.status(400).send('Se necesita un ID de sesión.');
+        if (!sessionIDBackend) {
+          return res.status(401).send('No hay sesión activa');
+        }
+
+        return res.json({
+          user: req.session.user,
+        });
+      } else {
+        return res.status(401).send('No hay sesión activa');
       }
-
-      const sessionIDBackend = await session.get(sessionID);
-
-      const { session_id } = sessionIDBackend;
-
-      if (sessionID !== session_id) {
-        return res.status(401).send('No autorizado.');
-      }
-
-      res.json({ sessionID });
     } catch (error) {
       console.error('Error al obtener la sesión:', error);
       res.status(500).send('Hubo un problema al obtener la sesión.');
