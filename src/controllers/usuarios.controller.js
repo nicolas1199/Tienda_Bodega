@@ -8,11 +8,6 @@ export const createUsuario = {
   create: (req, res) => {
     try {
       const { rut, str_nombre, mail, clave, rol, str_dir, id_co } = req.body;
-      const { error } = crearUsuarioValidation.validate(req.body);
-
-      if (error) {
-        return res.status(400).send(error.details[0].message);
-      }
 
       const nuevoUsuario = {
         rut: rut,
@@ -23,6 +18,13 @@ export const createUsuario = {
         str_dir: str_dir,
         id_co: id_co,
       };
+
+      const { error } = crearUsuarioValidation.validate(nuevoUsuario);
+
+      if (error) {
+        return res.status(400).send(error.details[0].message);
+      }
+
       Usuarios.create(nuevoUsuario);
 
       res.json({ message: 'Usuario creado correctamente.' });
@@ -43,16 +45,10 @@ export const createUsuario = {
   },
   update: (req, res) => {
     try {
-      const { rut } = req.params;
-      const { str_nombre, mail, clave, rol, str_dir, id_co } = req.body;
-
-      const { error } = updateUsuarioValidation.validate(req.body);
-
-      if (error) {
-        return res.status(400).send(error.details[0].message);
-      }
+      const { rut, str_nombre, mail, clave, rol, str_dir, id_co } = req.body;
 
       const updateUsuario = {
+        rut: rut,
         str_nombre: str_nombre,
         mail: mail,
         clave: clave,
@@ -60,9 +56,16 @@ export const createUsuario = {
         str_dir: str_dir,
         id_co: id_co,
       };
+
+      const { error } = updateUsuarioValidation.validate(updateUsuario);
+
+      if (error) {
+        return res.status(400).send(error.details[0].message);
+      }
+
       Usuarios.update(rut, updateUsuario);
 
-      res.redirect('/api/loged/usuarios');
+      res.json({message: 'Usuario modificado'})
     } catch (error) {
       console.error('Error al actualizar el usuario:', error);
       res.status(500).send('Hubo un problema al actualizar el usuario.');
@@ -72,8 +75,7 @@ export const createUsuario = {
     try {
       const { rut } = req.params;
       Usuarios.delete(rut);
-
-      res.redirect('/api/loged/usuarios');
+      res.json({message: "Usuario eliminado"})
     } catch (error) {
       console.error('Error al eliminar el usuario:', error);
       res.status(500).send('Hubo un problema al eliminar el usuario.');
